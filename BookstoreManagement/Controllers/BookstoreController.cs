@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookstoreManagement.Communication.Requests;
+using BookstoreManagement.Communication.Responses;
+using Microsoft.AspNetCore.Mvc;
+using ProductClientHub.Communication.Responses;
 
 namespace BookstoreManagement.Controllers;
 
@@ -6,33 +9,83 @@ namespace BookstoreManagement.Controllers;
 [ApiController]
 public class BookstoreController : ControllerBase
 {
+    private static readonly List<ResponseBooksJson> Books = new();
+
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok("Hello World!");
+        return Ok(Books);
     }
-    
+
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    [ProducesResponseType(typeof(ResponseBooksJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public IActionResult GetById(Guid id)
     {
-        return Ok($"Hello World! {id}");
+        var book = Books.FirstOrDefault(b => b.Id == id);
+        if (book == null)
+        {
+            return NotFound(new ResponseErrorMessageJson("Livro não encontrado."));
+        }
+
+        return Ok(book);
     }
-    
+
     [HttpPost]
-    public IActionResult Post([FromBody] string value)
+    [ProducesResponseType(typeof(ResponseBooksJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
+    public IActionResult Post([FromBody] RequestBooksJson value)
     {
-        return Ok($"Hello World! {value}");
+        if (string.IsNullOrWhiteSpace(value.Title) || string.IsNullOrWhiteSpace(value.Author))
+        {
+            return BadRequest(new ResponseErrorMessageJson("Título e autor são obrigatórios."));
+        }
+
+        var newBook = new ResponseBooksJson
+        {
+            Id = Guid.NewGuid(),
+            Title = value.Title,
+            Author = value.Author,
+            Price = value.Price,
+            Stock = value.Stock
+        };
+
+        Books.Add(newBook);
+
+        return CreatedAtAction(nameof(GetById), new { id = newBook.Id }, newBook);
     }
-    
+
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] string value)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public IActionResult Put(Guid id, [FromBody] RequestBooksJson value)
     {
-        return Ok($"Hello World! {id} {value}");
+        var book = Books.FirstOrDefault(b => b.Id == id);
+        if (book == null)
+        {
+            return NotFound(new ResponseErrorMessageJson("Livro não encontrado."));
+        }
+
+        book.Title = value.Title;
+        book.Author = value.Author;
+        book.Price = value.Price;
+        book.Stock = value.Stock;
+
+        return Ok(book);
     }
-    
+
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+    public IActionResult Delete(Guid id)
     {
-        return Ok($"Hello World! {id}");
+        var book = Books.FirstOrDefault(b => b.Id == id);
+        if (book == null)
+        {
+            return NotFound(new ResponseErrorMessageJson("Livro não encontrado."));
+        }
+
+        Books.Remove(book);
+        return Ok(new { Message = "Livro removido com sucesso." });
     }
 }
