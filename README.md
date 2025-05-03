@@ -96,45 +96,6 @@ A API estará disponível em `https://localhost:5001` ou `http://localhost:5000`
 - `200 OK` com mensagem de sucesso
 - `404 Not Found` se o livro não existir
 
-## 📁 Estrutura dos Models
-
-### RequestBooksJson
-
-```
-public class RequestBooksJson
-{
-    public string Title { get; set; }
-    public string Author { get; set; }
-    public decimal Price { get; set; }
-    public int Stock { get; set; }
-}
-```
-
-### ResponseBooksJson
-
-```
-public class ResponseBooksJson
-{
-    public Guid Id { get; set; }
-    public string Title { get; set; }
-    public string Author { get; set; }
-    public decimal Price { get; set; }
-    public int Stock { get; set; }
-}
-```
-
-### ResponseErrorMessageJson
-
-```
-public class ResponseErrorMessageJson
-{
-    public string Message { get; set; }
-
-    public ResponseErrorMessageJson(string message)
-    {
-        Message = message;
-    }
-}
 ```
 
 ## 💡 Aprendizados
