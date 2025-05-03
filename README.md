@@ -100,14 +100,17 @@ A API estará disponível em `https://localhost:5001` ou `http://localhost:5000`
 
 ## 💡 Aprendizados
 
+```
 - Criação de API REST com ASP.NET Core
 - Utilização de `ControllerBase` com `[ApiController]`
 - Boas práticas com status HTTP apropriados
 - Validações básicas e manipulação de listas em memória
 
+```
+
 ## 📝 Considerações
 
+```
 - Esta API usa uma lista estática em memória (sem banco de dados) apenas para fins didáticos.
-
 ---
 
