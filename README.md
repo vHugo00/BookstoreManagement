@@ -15,7 +15,7 @@ Este projeto é uma API RESTful desenvolvida em **C# com ASP.NET Core**, como pa
 1. Clone o repositório:
 
 ```
-git clone [https://github.com/seu-usuario/nome-do-repo.git](https://github.com/vHugo00/BookstoreManagement.git)
+git clone https://github.com/vHugo00/BookstoreManagement.git
 ```
 
 2. Acesse a pasta do projeto:
@@ -96,21 +96,14 @@ A API estará disponível em `https://localhost:5001` ou `http://localhost:5000`
 - `200 OK` com mensagem de sucesso
 - `404 Not Found` se o livro não existir
 
-```
-
 ## 💡 Aprendizados
 
-```
 - Criação de API REST com ASP.NET Core
 - Utilização de `ControllerBase` com `[ApiController]`
 - Boas práticas com status HTTP apropriados
 - Validações básicas e manipulação de listas em memória
 
-```
-
 ## 📝 Considerações
 
-```
 - Esta API usa uma lista estática em memória (sem banco de dados) apenas para fins didáticos.
----
-
+- Em um ambiente real, recomenda-se a integração com Entity Framework e banco de dados relacional.
