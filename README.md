@@ -107,3 +107,5 @@ A API estará disponível em `https://localhost:5001` ou `http://localhost:5000`
 
 - Esta API usa uma lista estática em memória (sem banco de dados) apenas para fins didáticos.
 - Em um ambiente real, recomenda-se a integração com Entity Framework e banco de dados relacional.
+
+
